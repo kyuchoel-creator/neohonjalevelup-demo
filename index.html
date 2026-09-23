@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>너혼자레벨업</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+:root { --ink:#e9edf6; --muted:#8992a8; --line:#293044; --panel:#131824; --purple:#8a5cff; --cyan:#51e7e0; --bg:#090c13; }
+* { box-sizing:border-box; } body { margin:0; background:radial-gradient(circle at 10% 0%,#17213a 0,transparent 26rem),var(--bg); color:var(--ink); font-family:"Noto Sans KR",sans-serif; }
+.app-shell { max-width:1180px; margin:auto; padding:24px 28px 56px; } .topbar { display:flex; align-items:center; border-bottom:1px solid var(--line); padding-bottom:20px; gap:20px; } .brand { font-family:"Black Han Sans",sans-serif; color:white; text-decoration:none; letter-spacing:1px; font-size:22px; } .brand span { color:var(--purple); } .date { margin-left:auto; color:var(--muted); font:12px "DM Mono"; }.icon-button,.delete-button { background:none;border:0;color:var(--muted);cursor:pointer;font-size:24px;}
+.hero { display:grid; grid-template-columns:2fr 1fr; gap:18px; padding:28px 0; }.character-card,.daily-card,.quest-panel,.create-panel { border:1px solid var(--line); background:linear-gradient(135deg,rgba(27,34,51,.98),rgba(14,18,28,.98)); }.character-card { min-height:218px; padding:30px; display:flex; align-items:center; gap:26px; position:relative; overflow:hidden; }.character-card:after { content:""; position:absolute; width:230px;height:230px;right:-90px;top:-90px;border:1px solid #7654d166;transform:rotate(45deg); }.level-emblem { width:106px;height:106px;flex:none; border:1px solid var(--purple); background:#17142c; display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 28px #6d43d733; }.level-emblem small,.eyebrow { color:var(--cyan); font:11px "DM Mono";letter-spacing:1.5px;margin:0;}.level-emblem strong {font:48px "Black Han Sans";line-height:1;color:white}.character-copy h1 { margin:8px 0 22px; font-size:27px;line-height:1.36;letter-spacing:-1px; }.character-copy em { color:#b494ff;font-style:normal; }.xp-line { width:260px; }.xp-line span {font:12px "DM Mono";color:#b8c0d2}.xp-track,.daily-track {height:5px;background:#293044;margin-top:8px;}.xp-track i,.daily-track i {display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));width:0;transition:width .35s}.rank {margin-left:auto;align-self:flex-start;z-index:1;color:var(--muted);font:11px "DM Mono"}.rank b{display:block;color:#d1bcff;font-size:25px;text-align:center;margin-top:3px}.daily-card {padding:30px}.daily-card h2{margin:0}.progress-number {margin:30px 0 10px;display:flex;align-items:baseline;gap:7px}.progress-number strong{font:50px "Black Han Sans";color:white}.progress-number span{font:11px "DM Mono";color:var(--muted)}.daily-card>p:last-child {font-size:13px;color:var(--muted);margin-top:18px}
+.quest-layout { display:grid;grid-template-columns:1.65fr 1fr; gap:18px; }.quest-panel,.create-panel{padding:28px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.section-title h2,.create-panel h2{font-size:21px;margin:5px 0 0}.quest-badge {border:1px solid #4e426c;color:#bdaaff;padding:5px 8px;font:11px "DM Mono"}.quest-list{display:flex;flex-direction:column;gap:10px}.quest-card{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1px solid #2d354a;background:#101520}.quest-card.completed{opacity:.55}.quest-card.completed h3{text-decoration:line-through}.check-button{margin-top:3px;width:22px;height:22px;flex:none;border:1px solid #6f7790;background:transparent;cursor:pointer}.completed .check-button{background:var(--cyan);border-color:var(--cyan);}.completed .check-button:after{content:"✓";color:#10202a;font-weight:900}.quest-body{flex:1}.quest-heading{display:flex;justify-content:space-between;gap:10px}.quest-heading h3{font-size:15px;margin:0;font-weight:600}.reward{font:11px "DM Mono";color:var(--cyan);white-space:nowrap}.steps{padding:0;margin:11px 0 0;list-style:none}.steps li{font-size:12px;color:var(--muted);margin:5px 0}.steps li:before{content:"◇";color:#7b6bab;margin-right:7px}.steps li.done{text-decoration:line-through;color:#5e6779}.steps li.done:before{content:"◆";color:var(--cyan)}.step-toggle{border:0;background:none;color:inherit;font:inherit;cursor:pointer;padding:0}.empty-state{text-align:center;color:var(--muted);padding:52px 5px;border:1px dashed #2b3448}.empty-state span{font-size:28px;color:#8a5cff}.empty-state p{font-size:13px;line-height:1.8}.create-panel{background:linear-gradient(150deg,#1b1830,#111725)}form{margin-top:24px}label{display:block;font-size:12px;font-weight:600;margin:20px 0;color:#cbd1df}input{width:100%;margin-top:8px;border:1px solid #3a4053;background:#0d111a;color:white;padding:11px 12px;font:13px "Noto Sans KR";outline-color:var(--purple)}input[type=range]{padding:0;accent-color:var(--purple)}output{float:right;color:var(--cyan);font:11px "DM Mono"}.field-hint{float:right;color:var(--muted);font-size:10px;font-weight:400}.step-entry{display:flex;gap:7px}.step-entry input{margin:8px 0 0}.step-entry button{margin-top:8px;border:1px solid #60528e;background:#29233f;color:#d8ccff;padding:0 11px;cursor:pointer}.step-draft{list-style:none;padding:0;margin:12px 0}.step-draft li{font-size:12px;color:#abb5ca;background:#161c29;margin:5px 0;padding:7px 9px}.step-draft button{float:right;background:none;border:0;color:#9b8acb;cursor:pointer}.create-button{border:0;background:linear-gradient(90deg,#7650e5,#a36aff);color:white;width:100%;padding:14px;margin-top:14px;font-weight:800;cursor:pointer;font-family:"Noto Sans KR"}.create-button span{font-size:18px;margin-left:6px}@media(max-width:760px){.app-shell{padding:18px}.hero,.quest-layout{grid-template-columns:1fr}.character-card{padding:23px;gap:17px}.character-copy h1{font-size:21px}.xp-line{width:170px}.rank{display:none}.daily-card{padding:24px}.quest-panel,.create-panel{padding:22px}}
+@media(max-width:760px){.app-shell{padding:14px 14px 42px}.topbar{position:sticky;top:0;z-index:10;margin:0 -14px;padding:14px;background:#090c13ef;backdrop-filter:blur(10px);gap:8px}.brand{font-size:19px}.hero{padding:16px 0}.character-card{min-height:0;padding:20px;gap:14px}.level-emblem{width:72px;height:72px}.level-emblem strong{font-size:34px}.character-copy h1{font-size:19px;margin:6px 0 15px}.xp-line{width:calc(100vw - 142px)}.daily-card{padding:20px}.quest-panel,.create-panel{padding:18px}.quest-card{padding:14px 12px;gap:11px}.quest-heading h3{font-size:14px}.category-filter{margin:0 -2px 14px;padding-bottom:3px}.filter{min-height:34px}.create-button{min-height:48px;font-size:14px}} 
+
+.mode-switch{display:flex;border:1px solid #3a4053;padding:3px}.mode{border:0;background:transparent;color:#8992a8;padding:7px 10px;cursor:pointer;font:11px "Noto Sans KR"}.mode.active{background:#7958da;color:#fff}.category-filter{display:flex;gap:5px;margin:-6px 0 16px;overflow:auto}.filter{border:1px solid #343c51;background:transparent;color:#aeb6ca;padding:6px 9px;cursor:pointer;font:11px "Noto Sans KR";white-space:nowrap}.filter.active{border-color:#9271ec;color:#d5c7ff;background:#292341}.category{color:#c4a9ff;font:10px "DM Mono"}.quest-heading h3{margin:3px 0 0}.approval-status{display:inline-block;margin-top:9px;color:#efc56e;font:10px "DM Mono"}select{width:100%;margin-top:8px;border:1px solid #3a4053;background:#0d111a;color:white;padding:11px 12px;font:13px "Noto Sans KR";outline-color:#8a5cff}.parent-dashboard{border:1px solid #293044;background:linear-gradient(135deg,#171c29,#111521);margin-top:18px;padding:28px}.parent-intro{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #293044;padding-bottom:22px}.parent-intro h2{font-size:26px;margin:5px 0}.parent-intro p:last-child{font-size:13px;color:#8992a8}.connection{color:#aab3c5;font-size:12px}.connection span{display:inline-block;width:8px;height:8px;border-radius:50%;background:#51e7e0;margin-right:5px}.parent-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:22px}.approval-panel,.reward-panel{border:1px solid #30384a;padding:20px;background:#101521}.approval-item,.reward-item{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #252c3d;gap:14px}.approval-item:last-child,.reward-item:last-child{border:0}.approval-item h3,.reward-item h3{font-size:14px;margin:0}.approval-item p,.reward-item p{font-size:11px;color:#8992a8;margin:4px 0}.approve{border:0;background:#54d6be;color:#0b2524;padding:8px 11px;font:700 11px "Noto Sans KR";cursor:pointer;white-space:nowrap}.reward-cost{color:#c5a8ff;font:11px "DM Mono"}.reward-form{display:grid;grid-template-columns:1fr 70px auto;gap:6px;margin-top:14px}.reward-form input{margin:0}.reward-form button{border:0;background:#7658ce;color:#fff;padding:0 12px;cursor:pointer;font:12px "Noto Sans KR"}@media(max-width:760px){.topbar{gap:9px}.date{display:none}.parent-grid{grid-template-columns:1fr}.parent-dashboard{padding:22px}.parent-intro{display:block}.connection{margin-top:12px}.reward-form{grid-template-columns:1fr 65px}.reward-form button{grid-column:1/-1;padding:10px}}
+.today-board{border:1px solid #39435c;background:linear-gradient(120deg,#161d30,#101625);padding:25px 28px;margin:0 0 18px}.today-board-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.today-board h2{font-size:24px;margin:5px 0}.today-board-head>div>p:last-child{font-size:13px;color:#a8b1c5;margin:7px 0 0}.start-all,.start-quest{border:1px solid #765be0;background:linear-gradient(90deg,#6747d0,#8c68ed);color:#fff;cursor:pointer;font:700 12px "Noto Sans KR";padding:12px 15px;white-space:nowrap}.start-all:disabled,.start-quest:disabled{background:#1b2130;border-color:#384056;color:#778096;cursor:default}.status-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #323c52;margin-top:23px}.status-grid>div{padding:13px 16px;border-right:1px solid #323c52}.status-grid>div:last-child{border:0}.status-grid span,.status-grid small{display:block;font:10px "DM Mono";color:#919bb1}.status-grid strong{font:27px "Black Han Sans";line-height:1.25;color:#fff;margin:4px 0}.time-lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.time-lane{min-height:88px;border:1px solid #2e3850;background:#0d1320;padding:12px;display:grid;grid-template-columns:20px 1fr;column-gap:7px}.lane-icon{color:#62e4da;font-size:15px}.time-lane small{color:#98a4bb;font:10px "DM Mono"}.time-lane strong{display:block;color:#fff;font:600 14px "DM Mono";margin-top:2px}.time-lane p{grid-column:1/-1;color:#a7b0c5;font-size:10px;line-height:1.5;margin:7px 0 0}.quest-card.active{border-color:#5bced0;box-shadow:inset 3px 0 #51e7e0}.quest-meta{margin:8px 0 0;color:#9ea9c0;font:10px "DM Mono"}.start-quest{margin-top:12px;padding:7px 10px;font-size:11px;background:#242144;border-color:#5e5682}.repeat-setting{display:flex;align-items:center;gap:8px;font-weight:400}.repeat-setting input{width:16px;margin:0;accent-color:#8a5cff}.focus-screen{position:fixed;z-index:30;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 35%,#293861 0,transparent 45%),#080c16}.focus-screen[hidden]{display:none}.focus-card{width:min(560px,100%);padding:42px 36px;border:1px solid #6575a2;background:linear-gradient(145deg,#1a2440,#0d1322);text-align:center;box-shadow:0 30px 100px #000d}.focus-category{display:inline-block;margin-top:25px;color:#63e2d8;font:11px "DM Mono"}.focus-card h2{font:28px "Black Han Sans","Noto Sans KR";line-height:1.4;margin:11px 0}.focus-card>p:not(.eyebrow){color:#aeb8cc;font-size:13px;line-height:1.7}.focus-time{display:block;margin:30px 0;font:72px "DM Mono";letter-spacing:-5px;color:#fff;text-shadow:0 0 25px #6d55e677}.focus-actions{display:flex;gap:8px;justify-content:center}.focus-actions button,.focus-exit{border:0;padding:13px 17px;cursor:pointer;font:700 12px "Noto Sans KR"}.focus-secondary{background:#283148;color:#d5dcec}.focus-complete{background:#55d9c7;color:#0b2526}.focus-exit{margin-top:22px;background:transparent;color:#a4aec2}
+@media(max-width:760px){.today-board{padding:22px}.today-board-head{display:block}.start-all{margin-top:16px;width:100%}.status-grid{grid-template-columns:1fr 1fr}.status-grid>div:nth-child(2){border-right:0}.status-grid>div:nth-child(-n+2){border-bottom:1px solid #323c52}.time-lanes{grid-template-columns:1fr 1fr}.focus-card{padding:34px 20px}.focus-time{font-size:55px}}
+.quest-card.selected{border-color:#876ded;background:#181733}.quest-card.selected .check-button{background:#8264e2;border-color:#aa91ff}.quest-card.selected .check-button:after{content:"✓";color:#fff;font-weight:900}.profile-button{border:1px solid #4e426c;background:#17172a;color:#d2c4ff;padding:7px 10px;cursor:pointer;font:11px "Noto Sans KR"}.profile-screen{position:fixed;inset:0;z-index:40;overflow:auto;padding:30px;background:#080c16e8}.profile-screen[hidden]{display:none}.profile-card{width:min(780px,100%);margin:auto;border:1px solid #596987;background:#111827;box-shadow:0 25px 100px #000;padding:30px}.profile-head{display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid #354057;padding-bottom:20px}.profile-head h2{margin:5px 0;font-size:24px}.profile-head p:last-child{color:#a8b1c5;font-size:12px;line-height:1.6;margin:7px 0 0}.profile-head button{border:0;background:transparent;color:#c6cedf;font-size:28px;cursor:pointer}.profile-card fieldset{border:1px solid #344057;margin:20px 0;padding:18px}.profile-card legend{color:#61e1d7;font:11px "DM Mono";padding:0 7px}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}.profile-grid label{margin:10px 0;font-size:12px}.profile-grid .wide{grid-column:1/-1}.profile-grid textarea{width:100%;min-height:76px;margin-top:8px;resize:vertical;border:1px solid #3a4053;background:#0d111a;color:#fff;padding:10px;font:13px "Noto Sans KR";outline-color:#8a5cff}.profile-actions{display:flex;justify-content:flex-end;gap:8px}.profile-actions button{border:0;padding:12px 16px;cursor:pointer;font:700 12px "Noto Sans KR"}.profile-actions button:first-child{background:#283148;color:#d5dcec}.profile-actions button:last-child{background:#7455dc;color:#fff}@media(max-width:600px){.today-board{padding:18px}.today-board h2{font-size:21px}.status-grid strong{font-size:23px}.time-lane{min-height:94px;padding:10px}.profile-button{margin-left:auto;min-height:34px}.mode-switch{display:none}.profile-screen{padding:0}.profile-card{min-height:100vh;padding:20px 16px;border:0}.profile-head h2{font-size:21px}.profile-grid{grid-template-columns:1fr}.profile-grid .wide{grid-column:auto}.profile-card fieldset{padding:14px 12px}.profile-actions{position:sticky;bottom:0;padding:12px 0 2px;background:#111827}.profile-actions button{flex:1;min-height:46px}.focus-screen{padding:0}.focus-card{min-height:100vh;width:100%;display:flex;flex-direction:column;justify-content:center;padding:28px 22px}.focus-time{font-size:60px;margin:34px 0}.focus-actions button{min-height:52px;flex:1}.focus-exit{min-height:44px}.start-quest{min-height:38px}.check-button{width:25px;height:25px}.quest-meta{line-height:1.5}.onboarding-card{padding-bottom:calc(22px + env(safe-area-inset-bottom))}}
+.result-screen{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px;background:#080c16e6}.result-screen[hidden]{display:none}.result-card{width:min(430px,100%);text-align:center;padding:38px 28px;border:1px solid #6878a2;background:linear-gradient(145deg,#1d2743,#101727);box-shadow:0 30px 100px #000d}.result-mark{display:grid;place-items:center;width:58px;height:58px;margin:auto;border:1px solid #64e2d8;border-radius:50%;background:#163834;color:#67e6da;font:32px "DM Mono"}.result-mark.timeout{border-color:#d5a36e;background:#37291d;color:#efc27c}.result-card h2{margin:15px 0 9px;font:26px "Black Han Sans","Noto Sans KR"}.result-card p:not(.eyebrow){min-height:42px;color:#b8c0d2;font-size:13px;line-height:1.65}.result-xp{display:block;margin:19px 0;color:#62e4da;font:18px "DM Mono"}.result-actions{display:flex;gap:8px;justify-content:center}.result-actions button{border:0;padding:13px 16px;cursor:pointer;font:700 12px "Noto Sans KR"}.result-primary{background:#7656dd;color:#fff}.result-secondary{background:#29344b;color:#dce4f3}@media(max-width:600px){.result-screen{padding:18px}.result-card{padding:34px 22px}.result-actions button{flex:1;min-height:48px}}
+.duration-entry{display:grid;grid-template-columns:1fr 95px;gap:8px;margin-top:8px}.duration-entry input,.duration-entry select{margin:0}.duration-entry+ .field-hint{display:block;float:none;margin-top:7px;color:#8992a8;font-size:10px;font-weight:400}
+
+.onboarding{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 20% 10%,#293861 0,transparent 38%),#090c13}.onboarding[hidden]{display:none}.onboarding-card{width:min(720px,100%);min-height:610px;border:1px solid #3a4260;background:linear-gradient(145deg,#171d30,#0d111b);box-shadow:0 24px 80px #000a;display:flex;flex-direction:column;padding:28px 38px}.onboard-top{display:flex;justify-content:space-between;color:#8992a8;font:12px "DM Mono";letter-spacing:1px;border-bottom:1px solid #30384c;padding-bottom:20px}.onboard-brand{font-family:"Black Han Sans";color:white;font-size:17px}.onboard-brand b{color:#9a75ff}.onboard-page{display:none;flex:1;padding-top:35px}.onboard-page.active{display:block}.onboard-page h2{font-size:29px;line-height:1.36;margin:8px 0 8px;letter-spacing:-1px}.onboard-desc{font-size:13px;color:#9ea8bd;margin:0 0 25px}.choice-grid{display:grid;gap:10px}.choice-grid.two{grid-template-columns:1fr 1fr}.choice-grid button,.starter-item{border:1px solid #374056;background:#111725;color:#ecf0fa;text-align:left;padding:16px;cursor:pointer;transition:.18s}.choice-grid button:hover,.choice-grid button.selected,.starter-item.selected{border-color:#9a75ff;background:#211d38;box-shadow:inset 3px 0 #9a75ff}.choice-grid strong{display:block;font-size:15px}.choice-grid span{display:block;font-size:11px;color:#98a2b7;margin-top:5px}.role-grid{grid-template-columns:1fr 1fr}.goals{grid-template-columns:repeat(3,1fr)}.goals button{padding:14px}.starter-list{display:grid;gap:9px}.starter-item{display:flex;align-items:center;gap:12px;padding:13px}.starter-check{width:20px;height:20px;border:1px solid #6d7790;display:grid;place-items:center;flex:none}.starter-item.selected .starter-check{background:#58e0d3;border-color:#58e0d3;color:#0c2230}.starter-item strong{font-size:14px}.starter-item span{margin-left:auto;color:#58e0d3;font:11px "DM Mono"}.onboard-footer{display:flex;justify-content:space-between;border-top:1px solid #30384c;padding-top:20px}.onboard-back,.onboard-next{border:0;padding:11px 18px;cursor:pointer;font:600 13px "Noto Sans KR"}.onboard-back{background:transparent;color:#96a1b7}.onboard-back:disabled{opacity:.35}.onboard-next{background:linear-gradient(90deg,#7650e5,#a36aff);color:white;min-width:106px}@media(max-width:600px){.onboarding{padding:0}.onboarding-card{border:0;min-height:100vh;padding:22px}.onboard-page{padding-top:27px}.onboard-page h2{font-size:25px}.goals{grid-template-columns:1fr 1fr}.choice-grid.two,.role-grid{grid-template-columns:1fr}.choice-grid button{padding:12px}}
+
+.starter-list{max-height:285px;overflow:auto;padding-right:4px}.starter-list::-webkit-scrollbar{width:6px}.starter-list::-webkit-scrollbar-thumb{background:#59627d}.age-grid{grid-template-columns:repeat(3,1fr)}@media(max-width:600px){.age-grid{grid-template-columns:1fr 1fr}}
+
+.onboarding{background:radial-gradient(circle at 18% 12%,#334377 0,transparent 32%),radial-gradient(circle at 86% 85%,#35215f 0,transparent 30%),#080c18}.onboarding:before{content:"";position:absolute;inset:22px;pointer-events:none;background:linear-gradient(135deg,transparent 49.8%,#8e74e315 50%,transparent 50.2%),linear-gradient(45deg,transparent 49.8%,#55ddd010 50%,transparent 50.2%);background-size:180px 180px}.onboarding-card{position:relative;border-color:#596889;background:linear-gradient(145deg,#19223a,#0e1422 70%);box-shadow:0 30px 100px #000c}.onboard-top{border-bottom-color:#46516a}.onboard-top:after{content:"SYSTEM ONLINE";color:#56ded4;font:10px "DM Mono";letter-spacing:1.2px;margin-left:auto;margin-right:18px}.onboard-page h2{font-family:"Black Han Sans","Noto Sans KR",sans-serif;font-weight:400;letter-spacing:.1px}.onboard-desc{padding-left:12px;border-left:2px solid #56ded4}.choice-grid button{position:relative;border-color:#3b4864;background:linear-gradient(115deg,#141b2c,#101624);min-height:74px}.choice-grid button:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent}.choice-grid button:hover:before,.choice-grid button.selected:before{background:#58e0d3}.choice-grid button.selected{background:linear-gradient(115deg,#252043,#1a2035);box-shadow:0 0 0 1px #9a78ff inset,0 0 24px #7653e422}.choice-grid strong{font-size:16px}.role-grid button{min-height:82px}.onboard-question{margin:19px 0 12px;padding:13px 16px;border:1px solid #425172;background:#151d30;color:#e6e9f6;font-size:15px;line-height:1.65;font-weight:600}.onboard-question:before{content:"QUEST GUIDE  //  ";display:block;color:#58e0d3;font:10px "DM Mono";letter-spacing:1px;margin-bottom:4px}.starter-item{position:relative;border-color:#3c4966;background:linear-gradient(90deg,#121a2b,#151c2d)}.starter-item:after{content:"선택";color:#9da8bd;font:10px "DM Mono";margin-left:auto}.starter-item.selected:after{content:"EQUIPPED";color:#58e0d3}.starter-item span{margin-left:0}.onboard-footer{border-top-color:#46516a}.onboard-next{box-shadow:0 5px 20px #7650e550}.onboard-back{letter-spacing:.2px}@media(max-width:600px){.onboarding:before{inset:8px}.onboard-top:after{display:none}.onboard-question{font-size:14px}.onboarding{height:100dvh;min-height:100dvh;align-items:flex-start;overflow-y:auto;overscroll-behavior:contain;padding:0}.onboarding-card{width:100%;min-height:100dvh;height:auto;padding:calc(22px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));overflow:visible}.onboard-top{position:sticky;top:0;z-index:2;background:#19223a;padding-top:2px}.onboard-page{min-height:0}.onboard-footer{position:sticky;bottom:0;z-index:2;background:#0e1422;padding-bottom:2px}.onboard-next,.onboard-back{min-height:48px}}
+
+</style>
+</head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#">너혼자<span>레벨업</span></a>
+        <div class="date" id="today"></div>
+        <button class="profile-button" id="profileButton">내 정보</button>
+        <div class="mode-switch"><button class="mode active" data-mode="child">내 퀘스트</button><button class="mode" data-mode="parent">부모님</button></div>
+        <button class="icon-button" id="resetButton" aria-label="데이터 초기화" title="데이터 초기화">↻</button>
+      </header>
+
+      <section class="hero">
+        <div class="character-card">
+          <div class="level-emblem"><small>LV.</small><strong id="level">1</strong></div>
+          <div class="character-copy">
+            <p class="eyebrow">MY LIFE STATUS</p>
+            <h1>나의 일상을<br /><em>한 단계</em> 성장시키자.</h1>
+            <div class="xp-line"><span id="xpLabel">0 / 100 XP</span><div class="xp-track"><i id="xpBar"></i></div></div>
+          </div>
+          <div class="rank">RANK <b id="rank">E</b></div>
+        </div>
+        <div class="daily-card">
+          <p class="eyebrow">TODAY'S PROGRESS</p>
+          <div class="progress-number"><strong id="doneCount">0</strong><span>/ <span id="totalCount">0</span> QUESTS</span></div>
+          <div class="daily-track"><i id="dailyBar"></i></div>
+          <p id="dailyMessage">새로운 퀘스트를 등록해 보세요.</p>
+        </div>
+      </section>
+
+      <section class="today-board" aria-label="오늘의 퀘스트 현황">
+        <div class="today-board-head">
+          <div><p class="eyebrow">TODAY'S COMMAND BOARD</p><h2>오늘의 현황</h2><p id="todaySummary">오늘의 작은 행동이 다음 레벨을 엽니다.</p></div>
+          <button id="startAllButton" class="start-all">오늘 퀘스트 시작 <span>→</span></button>
+        </div>
+        <div class="status-grid">
+          <div><span>완료</span><strong id="statusDone">0</strong><small>QUESTS</small></div>
+          <div><span>진행 중</span><strong id="statusActive">0</strong><small>QUEST</small></div>
+          <div><span>남은 퀘스트</span><strong id="statusRemaining">0</strong><small>QUESTS</small></div>
+          <div><span>집중 시간</span><strong id="statusMinutes">0</strong><small>MINUTES</small></div>
+        </div>
+        <div class="time-lanes" id="timeLanes"></div>
+      </section>
+
+      <section class="quest-layout">
+        <div class="quest-panel">
+          <div class="section-title"><div><p class="eyebrow">ACTIVE QUESTS</p><h2>오늘의 퀘스트</h2></div><span class="quest-badge" id="remaining">0 LEFT</span></div>
+          <div class="category-filter" id="categoryFilter"><button class="filter active" data-category="전체">전체</button><button class="filter" data-category="공부">공부</button><button class="filter" data-category="자기관리">자기관리</button><button class="filter" data-category="건강">건강</button><button class="filter" data-category="취미">취미</button></div>
+          <div id="questList" class="quest-list"></div>
+          <div class="empty-state" id="emptyState"><span>⚔</span><p>아직 진행 중인 퀘스트가 없습니다.<br />오른쪽에서 첫 퀘스트를 만들어 보세요.</p></div>
+        </div>
+
+        <aside class="create-panel">
+          <p class="eyebrow">NEW QUEST</p>
+          <h2>새 퀘스트 생성</h2>
+          <form id="questForm">
+            <label>퀘스트 이름<input id="questTitle" required maxlength="50" placeholder="예: 영어 단어 20개 복습하기" /></label>
+            <label>성장 분야<select id="category"><option>공부</option><option>자기관리</option><option>건강</option><option>취미</option><option>관계</option></select></label>
+            <label>경험치 보상 <output id="rewardOutput">30 XP</output><input id="reward" type="range" min="10" max="100" value="30" step="10" /></label>
+            <label>퀘스트 시간대<select id="questSlot"><option value="아침">아침</option><option value="낮">낮</option><option value="저녁" selected>저녁</option><option value="자유 시간">자유 시간</option></select></label>
+            <label>퀘스트 기간<div class="duration-entry"><input id="questTimeValue" type="number" min="1" max="365" value="20" required /><select id="questTimeUnit"><option value="minute">분</option><option value="hour">시간</option><option value="day">일</option></select></div><span class="field-hint">집중 시간 또는 완료 기한</span></label>
+            <label class="repeat-setting"><input id="questRepeat" type="checkbox" /> <span>매일 지정 시간에 반복</span></label>
+            <label id="repeatTimeWrap" hidden>반복 시각<input id="questRepeatAt" type="time" value="20:00" /></label>
+            <label>단계 <span class="field-hint">선택 사항 · Enter로 추가</span><div class="step-entry"><input id="stepInput" maxlength="50" placeholder="예: 자료 조사" /><button type="button" id="addStep">추가</button></div></label>
+            <ul class="step-draft" id="stepDraft"></ul>
+            <button class="create-button" type="submit">퀘스트 시작 <span>→</span></button>
+          </form>
+        </aside>
+      </section>
+      <section class="parent-dashboard" id="parentDashboard" hidden>
+        <div class="parent-intro"><div><p class="eyebrow">FAMILY QUEST BOARD</p><h2>민준이의 성장 보드</h2><p>완료한 퀘스트를 확인하고 약속한 보상을 지급해 주세요.</p></div><div class="connection"><span></span>연결됨 · 자녀 계정</div></div>
+        <div class="parent-grid"><div class="approval-panel"><div class="section-title"><div><p class="eyebrow">WAITING FOR YOU</p><h2>승인 대기 퀘스트</h2></div><span class="quest-badge" id="pendingCount">0 WAITING</span></div><div id="approvalList"></div></div><div class="reward-panel"><p class="eyebrow">REWARD VAULT</p><h2>약속한 보상</h2><div id="rewardList"></div><form id="rewardForm" class="reward-form"><input id="rewardTitle" maxlength="40" placeholder="예: 주말 게임 1시간" required /><input id="rewardCost" type="number" min="10" step="10" value="60" required /><button>보상 추가</button></form></div></div>
+      </section>
+    </main>
+    <template id="questTemplate">
+      <article class="quest-card">
+        <button class="check-button" aria-label="오늘 실행할 퀘스트 선택"></button>
+        <div class="quest-body"><div class="quest-heading"><div><span class="category"></span><h3></h3></div><span class="reward"></span></div><p class="quest-meta"></p><ul class="steps"></ul><span class="approval-status"></span><button class="start-quest">시작하기 <span>→</span></button></div>
+        <button class="delete-button" aria-label="퀘스트 삭제">×</button>
+      </article>
+    </template>
+    <section class="profile-screen" id="profileScreen" hidden aria-label="나의 비공개 정보">
+      <div class="profile-card">
+        <div class="profile-head"><div><p class="eyebrow">PRIVATE LIFE VAULT</p><h2>나의 현재 상황</h2><p>이 데모에서는 이 브라우저에만 저장됩니다. 계좌번호·비밀번호·인증 정보는 입력하지 마세요.</p></div><button id="profileClose" aria-label="닫기">×</button></div>
+        <form id="profileForm">
+          <fieldset><legend>기본 · 개인적 부분</legend><div class="profile-grid"><label>닉네임<input id="profileNickname" maxlength="20" placeholder="예: 성장하는 나" /></label><label>연령대<select id="profileAge"><option value="">선택 안 함</option><option>10대</option><option>20대</option><option>30대</option><option>40대</option><option>50대</option><option>60대+</option></select></label><label>키 (cm)<input id="profileHeight" type="number" min="30" max="250" placeholder="선택" /></label><label>몸무게 (kg)<input id="profileWeight" type="number" min="10" max="300" placeholder="선택" /></label><label class="wide">외모·자기관리 목표<textarea id="profileAppearance" maxlength="300" placeholder="예: 피부 관리, 옷 스타일, 자신감 등"></textarea></label></div></fieldset>
+          <fieldset><legend>생활 · 외부적 부분</legend><div class="profile-grid"><label>현재 생활/직업<input id="profileRole" maxlength="60" placeholder="예: 직장인, 대학생, 자영업" /></label><label>가족·돌봄 상황<input id="profileFamily" maxlength="100" placeholder="예: 부모님과 거주, 자녀 돌봄" /></label><label>소득 상태 (범위/목표)<input id="profileIncome" maxlength="60" placeholder="예: 월 소득 목표 300만 원" /></label><label>자산·부채 상태 (범위/목표)<input id="profileAssets" maxlength="60" placeholder="예: 비상금 목표 500만 원" /></label><label class="wide">현재 고민과 바라는 변화<textarea id="profileNotes" maxlength="500" placeholder="추천 퀘스트에 참고할 수 있는 나만의 기록"></textarea></label></div></fieldset>
+          <div class="profile-actions"><button type="button" id="profileCancel">취소</button><button type="submit">비공개 정보 저장</button></div>
+        </form>
+      </div>
+    </section>
+    <section class="focus-screen" id="focusScreen" hidden aria-label="퀘스트 집중 화면">
+      <div class="focus-card">
+        <p class="eyebrow">FOCUS MODE · OTHER QUESTS HIDDEN</p>
+        <span class="focus-category" id="focusCategory"></span>
+        <h2 id="focusTitle"></h2>
+        <p id="focusGuide">이 퀘스트에만 집중해 보세요.</p>
+        <strong class="focus-time" id="focusTime">00:00</strong>
+        <div class="focus-actions"><button id="focusPause" class="focus-secondary">일시정지</button><button id="focusComplete" class="focus-complete">완료 확인</button></div>
+        <button id="focusExit" class="focus-exit">← 현황판으로 돌아가기</button>
+      </div>
+    </section>
+    <section class="result-screen" id="resultScreen" hidden aria-live="polite">
+      <div class="result-card">
+        <span id="resultMark" class="result-mark">✓</span>
+        <p class="eyebrow" id="resultLabel">QUEST COMPLETE</p>
+        <h2 id="resultTitle">퀘스트 완료!</h2>
+        <p id="resultMessage"></p>
+        <strong id="resultXp" class="result-xp"></strong>
+        <div class="result-actions" id="resultActions"></div>
+      </div>
+    </section>
+    <section class="onboarding" id="onboarding" aria-label="시작 설정">
+      <div class="onboarding-card">
+        <div class="onboard-top"><span class="onboard-brand">너혼자 <b>레벨업</b></span><span id="onboardStep">01 / 04</span></div>
+        <div class="onboard-page active" data-page="1"><p class="eyebrow">WELCOME, PLAYER</p><h2>지금의 당신은<br />어떤 시기에 있나요?</h2><p class="onboard-desc">가장 가까운 항목 하나를 선택해 주세요. 언제든 바꿀 수 있어요.</p><div class="choice-grid age-grid" data-field="age"><button data-value="10대"><strong>10대</strong><span>학교와 나를 알아가는 시기</span></button><button data-value="20대"><strong>20대</strong><span>독립과 가능성을 넓히는 시기</span></button><button data-value="30대"><strong>30대</strong><span>일과 생활의 기반을 만드는 시기</span></button><button data-value="40대"><strong>40대</strong><span>균형과 책임이 커지는 시기</span></button><button data-value="50대"><strong>50대</strong><span>전환과 건강을 돌보는 시기</span></button><button data-value="60대"><strong>60대+</strong><span>활력과 연결을 넓히는 시기</span></button></div></div>
+        <div class="onboard-page" data-page="2"><p class="eyebrow">YOUR CURRENT ROLE</p><h2>현재 가장 가까운<br />상황을 골라 주세요.</h2><p class="onboard-desc" id="roleGuide">연령대에 맞는 현실적인 선택지만 보여 드립니다.</p><div class="choice-grid role-grid" id="roleChoices"></div></div>
+        <div class="onboard-page" data-page="3"><p class="eyebrow">CHOOSE YOUR GROWTH</p><h2>이번 주에 키우고 싶은<br />영역을 골라 주세요.</h2><p class="onboard-desc">최대 3개까지 선택할 수 있어요.</p><div class="choice-grid goals" data-field="goals"><button data-value="공부"><strong>📚 공부</strong><span>집중력과 지식</span></button><button data-value="커리어"><strong>💼 커리어</strong><span>실행력과 전문성</span></button><button data-value="자기관리"><strong>✨ 자기관리</strong><span>자신감과 생활력</span></button><button data-value="건강"><strong>🌿 건강</strong><span>체력과 회복</span></button><button data-value="취미"><strong>🎮 취미</strong><span>즐거움과 창의성</span></button><button data-value="관계"><strong>🤝 관계</strong><span>연결과 협업</span></button></div></div>
+        <div class="onboard-page" data-page="4"><p class="eyebrow">SYSTEM RECOMMENDATION</p><h2>첫 번째 성장 경로를<br />선택해 주세요.</h2><p class="onboard-question">“당신의 현재 상황에는<br />이런 퀘스트부터 시작하면 어떨까요?”</p><p class="onboard-desc" id="onboardContext">원하는 퀘스트를 선택하세요. 나중에 직접 추가할 수도 있어요.</p><div class="starter-list" id="starterList"></div></div>
+        <div class="onboard-footer"><button id="onboardBack" class="onboard-back" disabled>← 이전</button><button id="onboardNext" class="onboard-next">다음 →</button></div>
+      </div>
+    </section>
+  <script>
+// 300 local quest templates: 50 templates for each life area.
+// Each root quest has a light and a standard version so users can choose a realistic load.
+const questRoots = {
+  공부: ['오늘 배운 내용 핵심 3개 회상','오답 3문제 원인 기록','단어 또는 개념 10개 능동 회상','교과서 한 단원 목차 훑기','수업 노트 1쪽 정리','읽은 글 한 문단 내 말로 요약','문제 풀이 전 계획 세우기','모르는 부분 질문 1개 정리','내일 공부할 자료 미리 준비','학습 공간 5분 정리','집중 방해 앱 잠시 끄기','복습 알림 날짜 정하기','개념과 예시 한 쌍 연결','오답 노트 한 장 보기','짧은 퀴즈로 기억 확인','공부 목표를 한 문장으로 쓰기','오늘 공부한 것을 친구에게 설명','과목별 우선순위 3개 정하기','시험 또는 과제 마감일 확인','공부 시작 전 물과 도구 준비','학습 영상 핵심만 메모','헷갈리는 개념 두 개 비교','어제 배운 내용 다시 꺼내 보기','공부 후 막힌 점 한 줄 기록','내일 첫 공부 퀘스트 정하기'],
+  커리어: ['관심 직무 공고 1개 읽기','이력서 한 문장 다듬기','포트폴리오 작업 한 조각 정리','업무 또는 과제 우선순위 3개 정하기','중요한 이메일 초안 쓰기','업계 뉴스 한 편 읽고 메모','새 도구 기능 하나 익히기','오늘 한 일을 성과 문장으로 기록','멘토 또는 동료에게 질문 1개 준비','프로젝트 다음 행동 한 개 정하기','회의 전 안건 3개 정리','회의 후 할 일 3개 기록','내 강점 사례 하나 적기','지원서 문항 한 부분 작성','관심 회사 또는 조직 조사','업무 파일과 폴더 10분 정리','내일 가장 중요한 업무 예약','전문 분야 글 한 단락 읽기','자격증 또는 교육 과정 일정 확인','작업물 피드백 한 개 반영','업무 자동화 아이디어 한 줄 기록','커리어 목표를 작은 단계로 나누기','명함 또는 프로필 최신화','협업자에게 진행 상황 공유','이번 주 배운 점 한 줄 회고'],
+  자기관리: ['내일 입을 옷과 준비물 정하기','아침 또는 저녁 스킨케어 하기','가방 또는 책상 5분 정리','오늘 물건 제자리에 두기','거울 보고 나에게 친절한 말 한마디','내일 기상 시간 정하기','잠들기 전 화면 사용 줄이기','샤워 또는 위생 루틴 하기','좋아하는 향 또는 음악으로 전환하기','방 환기 5분 하기','할 일 하나 미루지 않고 시작하기','오늘 소비 한 건 기록','세탁 또는 의류 관리 한 가지 하기','휴대폰 사진 또는 파일 정리','나만의 스타일 참고 이미지 저장','간단한 식사 또는 간식 준비','작은 물건 하나 버리거나 기부하기','오늘 기분을 한 단어로 기록','내일 일정 한 번 확인','필요한 예약 또는 연락 처리','나만의 쉼 공간 만들기','기본 스트레칭으로 몸 깨우기','칭찬할 행동 하나 기록','나에게 필요한 물건 목록 정리','하루 마무리 체크리스트 완료'],
+  건강: ['가벼운 스트레칭 하기','10분 산책 또는 계단 걷기','물 한 컵 천천히 마시기','오늘 수면 목표 시간 정하기','식사 전후 몸 상태 확인','목과 어깨 풀기','눈 쉬는 시간 5분 갖기','집에서 짧은 근력 운동 하기','자세 바르게 앉기 10분','햇빛 또는 바람 쐬기','과일이나 채소 한 가지 먹기','늦은 카페인 줄이기','운동화 또는 운동복 준비','호흡 1분 천천히 하기','오늘 걸음 또는 활동 기록','수면 전 조명 낮추기','건강검진 또는 병원 일정 확인','몸이 불편한 곳 메모','좋아하는 운동 영상 저장','주간 운동 약속 정하기','식사 시간을 천천히 지키기','물병 채워 두기','휴식 시간 알람 설정','잠들기 전 가벼운 이완','내일 건강 퀘스트 하나 고르기'],
+  취미: ['좋아하는 게임 또는 취미 시간 약속 정하기','그림 또는 글 한 조각 만들기','좋아하는 음악 한 곡 집중해서 듣기','사진 한 장 예쁘게 찍기','게임 플레이 후 한 줄 기록','취미 장비 또는 파일 정리','새로운 장르 하나 가볍게 시도','관심 영상 또는 책 한 부분 보기','창작 아이디어 하나 메모','좋아하는 캐릭터나 작품 이야기 나누기','게임 종료 시간 지키기','취미 관련 커뮤니티 글 한 편 읽기','취미 결과물 하나 저장 또는 공유','연습할 기술 하나 고르기','짧은 영상 또는 사진 편집','퍼즐 또는 두뇌 놀이 하기','좋아하는 장소 산책하며 영감 찾기','취미 예산 한 번 확인','재미있었던 순간 기록','처음 해보는 작은 만들기','플레이리스트 한 곡 추가','읽고 싶은 책 또는 만화 표시','취미 친구에게 추천 하나 받기','다음 취미 시간 캘린더에 넣기','오늘 즐거웠던 이유 한 줄 쓰기'],
+  관계: ['고마운 사람에게 안부 전하기','가족 또는 친구에게 먼저 연락하기','상대방 말 끝까지 듣기','오늘 받은 도움에 감사 표현','약속 시간 또는 일정 확인','친구와 함께 할 활동 하나 정하기','미안했던 일 짧게 사과하기','칭찬 한마디 전하기','가족과 식사 또는 대화 시간 갖기','팀플 또는 협업 역할 확인','상대가 좋아하는 것 한 가지 기억','갈등 상황에서 잠시 쉬고 답하기','도움이 필요할 때 요청하기','친구의 소식 하나 물어보기','공동 퀘스트 하나 제안','대화 중 휴대폰 내려놓기','응원 메시지 한 줄 보내기','연락하고 싶은 사람 목록 정리','내 감정을 차분히 말하기','약속 후 고마움 표현','가족 일정 하나 도와주기','모임 또는 동아리 일정 확인','좋은 추억 사진 한 장 공유','서로의 경계 존중하기','오늘 관계에서 잘한 일 기록']
+};
+const roleMap = {공부:['학생','대학생'],커리어:['대학생','직장인'],자기관리:['all'],건강:['all'],취미:['all'],관계:['all','생활 중심']};
+const QUEST_CATALOG = Object.fromEntries(Object.entries(questRoots).map(([category, roots]) => [category, roots.flatMap((title, index) => [
+  { id:`${category}-${index+1}-light`, title:`${title} - 가볍게 10분`, category, reward:10+(index%3)*5, difficulty:'가볍게', roles:roleMap[category] },
+  { id:`${category}-${index+1}-standard`, title:`${title} - 집중 20분`, category, reward:25+(index%3)*5, difficulty:'집중', roles:roleMap[category] }
+]) ]));
+
+// Situation-specific starters are selected before the broader 300-quest catalog.
+const SITUATION_PACKS = {
+  학생:[['오늘 수업 핵심 3개 복습하기',30,'공부'],['숙제 또는 수행평가 다음 단계 정하기',25,'공부'],['게임·휴대폰 종료 시간 약속 지키기',20,'자기관리'],['친구에게 먼저 안부 묻기',15,'관계']],
+  대학생:[['이번 주 과제의 첫 20분 시작하기',30,'공부'],['포트폴리오 또는 지원서 한 문장 쓰기',30,'커리어'],['이번 주 지출 한 건 기록하기',15,'자기관리'],['혼자 밥 또는 운동 약속 지키기',20,'건강']],
+  직장인:[['오늘 가장 중요한 업무 하나 끝내기',35,'커리어'],['회의 또는 업무 후 다음 행동 3개 정리',25,'커리어'],['점심 또는 퇴근 후 10분 걷기',20,'건강'],['내일 출근 준비 5분 하기',15,'자기관리']],
+  자영업:[['오늘 고객 또는 매출 행동 하나 하기',35,'커리어'],['정산·재고·예약 중 한 가지 확인하기',25,'커리어'],['업무 종료 시간을 정하고 지키기',20,'자기관리'],['짧은 휴식 또는 식사 시간 확보하기',15,'건강']],
+  주부:[['오늘 꼭 필요한 집안일 한 가지 끝내기',25,'자기관리'],['가족 일정 또는 준비물 확인하기',20,'관계'],['나만을 위한 10분 확보하기',20,'건강'],['생활비 또는 장보기 항목 한 건 기록하기',15,'자기관리']],
+  은퇴:[['가벼운 걷기 또는 스트레칭 하기',20,'건강'],['가족·친구에게 안부 전하기',15,'관계'],['좋아하는 취미 20분 즐기기',20,'취미'],['오늘 기억하고 싶은 일 한 줄 기록하기',15,'자기관리']]
+  ,독립생활:[['오늘 식사 또는 장보기 한 가지 해결하기',20,'자기관리'],['월세·공과금·예산 한 번 확인하기',20,'자기관리'],['방 또는 생활공간 10분 정리하기',15,'자기관리'],['친구·가족에게 안부 전하기',15,'관계']]
+  ,전환기:[['새로운 일 또는 배움의 다음 단계 정하기',30,'커리어'],['이력서·경력·작업물 한 부분 정리하기',25,'커리어'],['오늘 컨디션을 돌보는 10분 만들기',20,'건강'],['도움을 청할 사람 한 명 떠올리기',15,'관계']]
+};
+const AGE_ADDITIONS = {
+  '10대':['내일 학교 준비물 미리 챙기기',15,'자기관리'], '20대':['이번 주 일정과 예산 한 번 확인하기',15,'자기관리'], '30대':['이번 주 나를 위한 휴식 시간 예약하기',20,'건강'], '40대':['가족·일정 중 중요한 한 가지 미리 조율하기',20,'관계'], '50대':['몸 상태 확인과 가벼운 운동 계획 세우기',20,'건강'], '60대':['오늘 새로운 것 한 가지 배우거나 시도하기',20,'취미']
+};
+const AGE_ROLE_OPTIONS = {
+  '10대': [
+    {value:'학생',title:'중·고등학생',desc:'학업 · 친구 · 취미'},
+    {value:'학생',title:'진로 탐색 중',desc:'관심사 · 경험 · 자신감'},
+    {value:'학생',title:'학교 밖 배움·활동',desc:'기술 · 취미 · 생활 리듬'}
+  ],
+  '20대': [
+    {value:'대학생',title:'대학생 / 취준생',desc:'학업 · 진로 · 독립'},
+    {value:'직장인',title:'신입 직장인',desc:'업무 · 적응 · 건강'},
+    {value:'자영업',title:'자영업 / 프리랜서',desc:'고객 · 프로젝트 · 수입'},
+    {value:'독립생활',title:'독립생활 중심',desc:'생활비 · 집 · 관계'}
+  ],
+  '30대': [
+    {value:'직장인',title:'직장인',desc:'업무 · 성장 · 균형'},
+    {value:'자영업',title:'자영업 / 프리랜서',desc:'사업 · 고객 · 회복'},
+    {value:'주부',title:'육아·가족 돌봄',desc:'가정 · 돌봄 · 나만의 시간'},
+    {value:'전환기',title:'이직·재도약 준비',desc:'경력 · 배움 · 컨디션'}
+  ],
+  '40대': [
+    {value:'직장인',title:'직장 리더 / 전문직',desc:'성과 · 리더십 · 건강'},
+    {value:'자영업',title:'사업 운영',desc:'매출 · 운영 · 휴식'},
+    {value:'주부',title:'가족·돌봄 중심',desc:'생활 · 관계 · 균형'},
+    {value:'전환기',title:'새로운 커리어 준비',desc:'재교육 · 전환 · 자신감'}
+  ],
+  '50대': [
+    {value:'직장인',title:'재직·경력 관리',desc:'전문성 · 건강 · 전환'},
+    {value:'자영업',title:'자영업 / 프리랜서',desc:'운영 · 고객 · 체력'},
+    {value:'주부',title:'가족 돌봄·생활 운영',desc:'관계 · 건강 · 나의 시간'},
+    {value:'전환기',title:'인생 2막 준비',desc:'배움 · 취미 · 재도약'}
+  ],
+  '60대': [
+    {value:'은퇴',title:'은퇴·시니어 생활',desc:'활력 · 관계 · 여가'},
+    {value:'직장인',title:'계속 일하는 중',desc:'일 · 건강 · 균형'},
+    {value:'자영업',title:'작은 사업·프리랜서',desc:'고객 · 일상 · 체력'},
+    {value:'주부',title:'가족 돌봄·생활 중심',desc:'가족 · 건강 · 취미'}
+  ]
+};
+
+const key='life-quest-demo-v2',profileKey='life-quest-profile-v1',privateProfileKey='life-quest-private-profile-v1',dayKey='life-quest-day-v1';
+const seed={quests:[
+  {id:1,title:'영어 단어 20개 회상하기',category:'공부',reward:30,completed:false,approved:true,steps:['단어장 없이 뜻 말해보기','틀린 단어만 다시 정리'],slot:'저녁',duration:25,repeat:true,active:false},
+  {id:2,title:'내일 입을 옷 미리 코디하기',category:'자기관리',reward:20,completed:true,approved:true,steps:['날씨 확인하기','옷과 가방 준비하기'],slot:'저녁',duration:10,repeat:true,active:false},
+  {id:3,title:'게임 전 스트레칭 10분',category:'건강',reward:20,completed:false,approved:true,steps:[],slot:'자유 시간',duration:10,repeat:true,active:false},
+  {id:4,title:'친구에게 먼저 안부 묻기',category:'관계',reward:15,completed:false,approved:true,steps:[],slot:'낮',duration:0,repeat:false,active:false}],rewards:[]};
+let data=JSON.parse(localStorage.getItem(key)||'null')||structuredClone(seed),draft=[],filter='전체',focusQuest=null,focusInterval=null,focusRemaining=0,paused=false;
+const $=s=>document.querySelector(s),safe=s=>{const e=document.createElement('i');e.textContent=s;return e.innerHTML},save=()=>localStorage.setItem(key,JSON.stringify(data));
+const defaults=q=>Object.assign(q,{slot:q.slot||'자유 시간',duration:Number(q.duration||0),timeValue:Number(q.timeValue||q.duration||0),timeUnit:q.timeUnit||'minute',repeatAt:q.repeatAt||'20:00',repeat:Boolean(q.repeat),active:Boolean(q.active),selected:Boolean(q.selected),approved:q.approved!==false,timerRemaining:Number.isFinite(q.timerRemaining)?q.timerRemaining:null,timerPaused:Boolean(q.timerPaused)});
+data.quests.forEach(defaults);
+function resetDaily(){const today=new Date().toLocaleDateString('sv-SE');if(localStorage.getItem(dayKey)===today)return;data.quests.forEach(q=>{if(q.repeat){q.completed=false;q.active=false}});localStorage.setItem(dayKey,today);save()}
+function activeQuest(){return data.quests.find(q=>q.active&&!q.completed)}
+function icon(slot){return ({'아침':'☀','낮':'◐','저녁':'☾','자유 시간':'◇'})[slot]||'◇'}
+function durationLabel(q){if(!q.duration)return '체크형 퀘스트';const unit={minute:'분',hour:'시간',day:'일'}[q.timeUnit]||'분';return `${q.timeValue||q.duration}${unit}`}
+function meta(q){return `${q.repeat?`↻ 매일 ${q.repeatAt} 반복 · `:''}${icon(q.slot)} ${q.slot} · ${durationLabel(q)}`}
+function complete(q){q.completed=true;q.active=false;q.timerRemaining=null;q.timerPaused=false;save();render();if(focusQuest===q)closeFocus();showResult('complete',q)}
+function showResult(type,q){
+  const completeMessages=q.repeat?['오늘의 루틴을 지켰어요. 내일의 나도 이어갈 수 있습니다.','연속 성공 기록이 쌓이고 있어요. 성장 리듬을 만들고 있습니다.']:q.steps.length?['목표 퀘스트의 한 단계를 완료했습니다. 다음 단계가 열렸어요.','어려운 과정을 끝까지 해냈어요. 성장 포인트가 쌓입니다.']:['집중 시간 종료. 흔들리지 않고 끝까지 해냈어요.','오늘의 경험치를 획득했습니다.'];
+  const timeoutMessages=['이번 퀘스트는 여기까지예요. 다음 시도에서 다시 도전할 수 있습니다.','오늘의 현실을 우선하세요. 시간대를 조정해서 다시 이어갈 수 있어요.'];
+  const isComplete=type==='complete',isCreated=type==='created',message=isCreated?`「${q.title}」 퀘스트가 생성되었습니다. ${q.repeat?`매일 ${q.repeatAt}에 반복됩니다.`:'원하는 시간에 시작해 보세요.'}`:(isComplete?completeMessages:timeoutMessages)[Math.floor(Math.random()*(isComplete?completeMessages.length:timeoutMessages.length))];
+  $('#resultMark').textContent=isComplete?'✓':isCreated?'＋':'◇';$('#resultMark').classList.toggle('timeout',!isComplete&&!isCreated);$('#resultLabel').textContent=isComplete?'QUEST COMPLETE':isCreated?'NEW QUEST CREATED':'QUEST PAUSED';$('#resultTitle').textContent=isComplete?'퀘스트 완료!':isCreated?'새 퀘스트가 생성되었습니다!':'이번 도전은 보류';$('#resultMessage').textContent=message;$('#resultXp').textContent=isComplete?`+${q.reward} XP 획득`:isCreated?`${durationLabel(q)} · +${q.reward} XP`:'경험치는 줄지 않아요';$('#resultActions').innerHTML=isComplete||isCreated?'<button class="result-primary" data-result="close">현황판 보기</button>':'<button class="result-secondary" data-result="retry">다시 도전하기</button><button class="result-primary" data-result="close">현황판으로</button>';$('#resultScreen').hidden=false;
+  $('#resultActions').querySelectorAll('[data-result]').forEach(b=>b.onclick=()=>{if(b.dataset.result==='retry'){q.timerRemaining=q.duration*60;q.timerPaused=false;q.active=true;save();$('#resultScreen').hidden=true;openFocus(q);return}$('#resultScreen').hidden=true});
+}
+function start(q){if(q.completed)return;if(!q.duration)q.duration=20;if(q.timerRemaining===null)q.timerRemaining=q.duration*60;data.quests.forEach(x=>{if(x.id!==q.id)x.active=false});q.active=true;save();render();openFocus(q)}
+function renderBoard(){const done=data.quests.filter(q=>q.completed),active=data.quests.filter(q=>q.active&&!q.completed),remain=data.quests.filter(q=>!q.completed&&!q.active),selected=remain.filter(q=>q.selected);
+  $('#statusDone').textContent=done.length;$('#statusActive').textContent=active.length;$('#statusRemaining').textContent=remain.length;$('#statusMinutes').textContent=done.filter(q=>q.duration).reduce((n,q)=>n+q.duration,0);
+  $('#todaySummary').textContent=active.length?`「${active[0].title}」 진행 중 · 집중 모드로 돌아갈 수 있어요.`:remain.length?`지금 시작할 수 있는 퀘스트가 ${remain.length}개 있어요.`:'오늘의 퀘스트를 모두 마쳤어요. 훌륭합니다!';
+  $('#timeLanes').innerHTML=['아침','낮','저녁','자유 시간'].map(slot=>{const list=data.quests.filter(q=>q.slot===slot),finished=list.filter(q=>q.completed).length;return `<div class="time-lane"><span class="lane-icon">${icon(slot)}</span><div><small>${slot}</small><strong>${finished} / ${list.length}</strong></div><p>${list.length?list.filter(q=>!q.completed).map(q=>safe(q.title)).slice(0,2).join(' · '):'등록된 퀘스트 없음'}</p></div>`}).join('');
+  $('#startAllButton').disabled=Boolean(active.length)||!remain.length;$('#startAllButton').textContent=active.length?'진행 중인 퀘스트 보기 →':selected.length?`선택한 ${selected.length}개 시작 →`:remain.length?'오늘 퀘스트 시작 →':'오늘 퀘스트 완료 ✓'}
+function render(){const done=data.quests.filter(q=>q.completed),xp=done.reduce((n,q)=>n+q.reward,0),level=Math.floor(xp/100)+1,total=data.quests.length;
+  $('#level').textContent=level;$('#rank').textContent=level>=7?'B':level>=3?'C':'E';$('#xpLabel').textContent=`${xp%100} / 100 XP`;$('#xpBar').style.width=`${xp%100}%`;$('#doneCount').textContent=done.length;$('#totalCount').textContent=total;$('#dailyBar').style.width=`${total?done.length/total*100:0}%`;$('#remaining').textContent=`${total-done.length} LEFT`;$('#dailyMessage').textContent=activeQuest()?`진행 중: ${activeQuest().title}`:`매일 반복 퀘스트 ${data.quests.filter(q=>q.repeat).length}개를 관리하고 있어요.`;renderBoard();
+  const list=$('#questList');list.innerHTML='';const qs=data.quests.filter(q=>filter==='전체'||q.category===filter);$('#emptyState').hidden=qs.length>0;
+  qs.forEach(q=>{const n=$('#questTemplate').content.cloneNode(true),c=n.querySelector('.quest-card');c.classList.toggle('completed',q.completed);c.classList.toggle('active',q.active&&!q.completed);c.classList.toggle('selected',q.selected&&!q.completed);n.querySelector('h3').textContent=q.title;n.querySelector('.category').textContent=q.category;n.querySelector('.reward').textContent=`+${q.reward} XP`;n.querySelector('.quest-meta').textContent=meta(q);
+    const b=n.querySelector('.start-quest');b.disabled=q.completed;b.textContent=q.active?'진행 중 · 타이머 보기':'시작하기 →';b.onclick=()=>q.active?openFocus(q):start(q);const check=n.querySelector('.check-button');check.disabled=q.completed;check.setAttribute('aria-pressed',String(q.selected));check.onclick=()=>{q.selected=!q.selected;save();render()};n.querySelector('.delete-button').onclick=()=>{data.quests=data.quests.filter(x=>x.id!==q.id);save();render()};const steps=n.querySelector('.steps');q.steps.forEach(s=>{const li=document.createElement('li'),b=document.createElement('button');b.className='step-toggle';b.textContent=s;li.append(b);steps.append(li)});list.append(n)})}
+function openFocus(q){focusQuest=q;paused=q.timerPaused;focusRemaining=q.timerRemaining===null?q.duration*60:q.timerRemaining;$('#focusTitle').textContent=q.title;$('#focusCategory').textContent=`${q.category} · ${q.slot}`;$('#focusGuide').textContent=`${durationLabel(q)} 동안 이 퀘스트만 진행합니다. 다른 퀘스트는 잠시 숨겨집니다.`;$('#focusScreen').hidden=false;drawFocus();clearInterval(focusInterval);focusInterval=setInterval(()=>{if(!paused&&focusRemaining>0){focusRemaining--;q.timerRemaining=focusRemaining;save();drawFocus();if(!focusRemaining){clearInterval(focusInterval);q.active=false;save();closeFocus();showResult('timeout',q)}}},1000)}
+function drawFocus(){const d=Math.floor(focusRemaining/86400),h=Math.floor(focusRemaining%86400/3600),m=Math.floor(focusRemaining%3600/60),s=focusRemaining%60;$('#focusTime').textContent=d?`${d}일 ${String(h).padStart(2,'0')}시간`:h?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;$('#focusPause').textContent=paused?'계속하기':'일시정지'}
+function closeFocus(){if(focusQuest){focusQuest.timerRemaining=focusRemaining;focusQuest.timerPaused=paused;save();render()}clearInterval(focusInterval);focusQuest=null;$('#focusScreen').hidden=true}
+$('#focusPause').onclick=()=>{paused=!paused;if(focusQuest){focusQuest.timerPaused=paused;focusQuest.timerRemaining=focusRemaining;save()}drawFocus()};$('#focusComplete').onclick=()=>{if(focusQuest)complete(focusQuest)};$('#focusExit').onclick=closeFocus;$('#startAllButton').onclick=()=>{const a=activeQuest();if(a){openFocus(a);return}const q=data.quests.find(q=>q.selected&&!q.completed)||data.quests.find(q=>!q.completed);if(q)start(q)};
+function addStep(){const i=$('#stepInput'),v=i.value.trim();if(v){draft.push(v);i.value='';$('#stepDraft').innerHTML=draft.map((x,j)=>`<li>${safe(x)} <button type="button" data-i="${j}">×</button></li>`).join('')}}
+$('#addStep').onclick=addStep;$('#stepInput').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addStep()}};$('#reward').oninput=e=>$('#rewardOutput').textContent=`${e.target.value} XP`;
+$('#questRepeat').onchange=e=>$('#repeatTimeWrap').hidden=!e.target.checked;
+$('#questForm').onsubmit=e=>{e.preventDefault();const title=$('#questTitle').value.trim(),timeValue=+$('#questTimeValue').value,timeUnit=$('#questTimeUnit').value,minutes=timeValue*({minute:1,hour:60,day:1440}[timeUnit]);if(!title||!timeValue)return;const quest=defaults({id:Date.now(),title,category:$('#category').value,reward:+$('#reward').value,completed:false,approved:true,steps:draft,slot:$('#questSlot').value,duration:minutes,timeValue,timeUnit,repeat:$('#questRepeat').checked,repeatAt:$('#questRepeatAt').value,active:false});data.quests.unshift(quest);draft=[];e.target.reset();$('#questSlot').value='저녁';$('#questTimeValue').value=20;$('#questTimeUnit').value='minute';$('#questRepeatAt').value='20:00';$('#repeatTimeWrap').hidden=true;save();render();showResult('created',quest)};
+$('#categoryFilter').onclick=e=>{if(e.target.dataset.category){filter=e.target.dataset.category;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===e.target));render()}};
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x===b));$('#parentDashboard').hidden=b.dataset.mode!=='parent';document.querySelector('.quest-layout').hidden=b.dataset.mode!=='child';$('.today-board').hidden=b.dataset.mode!=='child'});
+$('#resetButton').onclick=()=>{if(confirm('데모 데이터를 처음 상태로 되돌릴까요?')){data=structuredClone(seed);localStorage.removeItem(profileKey);localStorage.removeItem(privateProfileKey);localStorage.removeItem(dayKey);save();location.reload()}};
+const privateFields=['Nickname','Age','Height','Weight','Appearance','Role','Family','Income','Assets','Notes'];
+function openProfile(){const p=JSON.parse(localStorage.getItem(privateProfileKey)||'{}');privateFields.forEach(name=>{$('#profile'+name).value=p[name]||''});$('#profileScreen').hidden=false}
+function closeProfile(){$('#profileScreen').hidden=true}
+$('#profileButton').onclick=openProfile;$('#profileClose').onclick=closeProfile;$('#profileCancel').onclick=closeProfile;
+$('#profileForm').onsubmit=e=>{e.preventDefault();const p={};privateFields.forEach(name=>p[name]=$('#profile'+name).value.trim());localStorage.setItem(privateProfileKey,JSON.stringify(p));closeProfile();alert('내 정보가 이 브라우저에 비공개로 저장되었습니다.')};
+$('#today').textContent=new Intl.DateTimeFormat('ko-KR',{month:'long',day:'numeric',weekday:'short'}).format(new Date());resetDaily();render();
+
+let onboardStep=1;const profile={age:'',role:'',roleLabel:'',goals:[],starters:[]};const packFor=category=>{const all=QUEST_CATALOG[category]||[],matched=all.filter(q=>q.roles.includes('all')||q.roles.includes(profile.role));return (matched.length?matched:all).map(q=>[q.title,q.reward,category])},situationFor=()=>[...(SITUATION_PACKS[profile.role]||[]),AGE_ADDITIONS[profile.age]].filter(Boolean);
+function drawRoles(){const options=AGE_ROLE_OPTIONS[profile.age]||[];$('#roleGuide').textContent=`${profile.age}에 어울리는 현재 상황을 골라 주세요.`;$('#roleChoices').innerHTML=options.map(o=>`<button data-value="${o.value}" data-label="${o.title}" class="${profile.role===o.value&&profile.roleLabel===o.title?'selected':''}"><strong>${o.title}</strong><span>${o.desc}</span></button>`).join('');$('#roleChoices').querySelectorAll('button').forEach(b=>b.onclick=()=>{profile.role=b.dataset.value;profile.roleLabel=b.dataset.label;profile.starters=[];drawRoles()})}
+function drawOnboard(){document.querySelectorAll('.onboard-page').forEach(p=>p.classList.toggle('active',+p.dataset.page===onboardStep));$('#onboardStep').textContent=`0${onboardStep} / 04`;$('#onboardBack').disabled=onboardStep===1;$('#onboardNext').textContent=onboardStep===4?'퀘스트 시작 →':'다음 →';if(onboardStep===2)drawRoles();if(onboardStep===4){const tasks=[...situationFor(),...(profile.goals.length?profile.goals:['자기관리','건강']).flatMap(packFor)].slice(0,12);if(!profile.starters.length)profile.starters=tasks.slice(0,5);$('#onboardContext').textContent=`${profile.age} · ${profile.roleLabel} 생활에 맞춰 추천한 퀘스트예요. 필요한 것만 골라 주세요.`;$('#starterList').innerHTML=tasks.map(([t,x,c])=>`<button class="starter-item ${profile.starters.some(q=>q[0]===t)?'selected':''}" data-title="${t}" data-xp="${x}" data-category="${c}"><i class="starter-check">${profile.starters.some(q=>q[0]===t)?'✓':''}</i><strong>${t}</strong><span>+${x} XP</span></button>`).join('')}}
+document.querySelectorAll('[data-field="age"] button').forEach(b=>b.onclick=()=>{profile.age=b.dataset.value;profile.role='';profile.roleLabel='';profile.starters=[];b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x===b))});
+document.querySelectorAll('[data-field="goals"] button').forEach(b=>b.onclick=()=>{const i=profile.goals.indexOf(b.dataset.value);if(i>=0)profile.goals.splice(i,1);else if(profile.goals.length<3)profile.goals.push(b.dataset.value);b.classList.toggle('selected',profile.goals.includes(b.dataset.value));profile.starters=[]});
+$('#starterList').onclick=e=>{const b=e.target.closest('.starter-item');if(!b)return;const i=profile.starters.findIndex(q=>q[0]===b.dataset.title);if(i>=0)profile.starters.splice(i,1);else profile.starters.push([b.dataset.title,+b.dataset.xp,b.dataset.category]);drawOnboard()};$('#onboardBack').onclick=()=>{if(onboardStep>1){onboardStep--;drawOnboard()}};
+$('#onboardNext').onclick=()=>{if(onboardStep===1&&!profile.age)return alert('연령대를 하나 선택해 주세요.');if(onboardStep===2&&!profile.role)return alert('현재 상황을 하나 선택해 주세요.');if(onboardStep===3&&!profile.goals.length)return alert('성장 영역을 하나 이상 선택해 주세요.');if(onboardStep<4){onboardStep++;drawOnboard();return}profile.starters.forEach(([title,reward,category])=>{if(!data.quests.some(q=>q.title===title))data.quests.unshift(defaults({id:Date.now()+Math.random(),title,category:category||'자기관리',reward,completed:false,approved:true,steps:[],slot:'자유 시간',duration:0,repeat:false,active:false}))});localStorage.setItem(profileKey,JSON.stringify(profile));save();$('#onboarding').hidden=true;render()};
+if(localStorage.getItem(profileKey))$('#onboarding').hidden=true;else drawOnboard();
+
+</script>
+</body>
+</html>
