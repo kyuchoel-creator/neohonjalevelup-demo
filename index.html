@@ -259,7 +259,7 @@ function level(){return Math.floor(data.quests.filter(q=>q.completed).reduce((n,
 function tutorialLocked(q){return q.tutorial&&level()<5}
 function icon(slot){return ({'아침':'☀','낮':'◐','저녁':'☾','자유 시간':'◇'})[slot]||'◇'}
 function durationLabel(q){if(!q.duration)return '체크형 퀘스트';const unit={minute:'분',hour:'시간',day:'일'}[q.timeUnit]||'분';return `${q.timeValue||q.duration}${unit}`}
-function meta(q){return `${q.repeat?`↻ 매일 ${q.repeatAt} 반복 · `:''}${icon(q.slot)} ${q.slot} · ${durationLabel(q)}`}
+function meta(q){const repeat=q.repeat?`↻ 매일 ${q.repeatAt} 반복 · `:'';const slot=q.slot==='자유 시간'?'':`${icon(q.slot)} ${q.slot} · `;return `${repeat}${slot}${durationLabel(q)}`}
 function complete(q){q.completed=true;q.active=false;q.timerRemaining=null;q.timerPaused=false;save();render();if(focusQuest===q)closeFocus();showResult('complete',q)}
 function showResult(type,q){
   const completeMessages=q.repeat?['오늘의 루틴을 지켰어요. 내일의 나도 이어갈 수 있습니다.','연속 성공 기록이 쌓이고 있어요. 성장 리듬을 만들고 있습니다.']:q.steps.length?['목표 퀘스트의 한 단계를 완료했습니다. 다음 단계가 열렸어요.','어려운 과정을 끝까지 해냈어요. 성장 포인트가 쌓입니다.']:['집중 시간 종료. 흔들리지 않고 끝까지 해냈어요.','오늘의 경험치를 획득했습니다.'];
