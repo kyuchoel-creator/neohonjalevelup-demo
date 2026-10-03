@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>플랭클린 플래너 · 너혼자레벨업</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="planner.css">
+</head>
+<body>
+<div class="planner-shell">
+  <header class="planner-topbar"><a class="back-link" href="index.html">← <span>성장 퀘스트</span></a><a class="planner-brand" href="planner.html"><i></i> FRANKLIN <b>DAY</b></a><nav class="view-tabs" aria-label="계획 보기"><button class="view-tab active" data-view="day">일간 계획</button><button class="view-tab" data-view="week">주간 계획</button></nav><button class="quiet-button" id="resetPlanner">초기화</button></header>
+  <main>
+    <section class="date-hero"><div><p class="kicker" id="dateKicker">DAILY COMPASS</p><h1 id="dateTitle"></h1><p id="dateSubtitle">중요한 일을 먼저 정하고, 시간을 약속하세요.</p></div><div class="date-nav"><button id="prevDate" aria-label="이전">←</button><button id="todayButton">오늘</button><button id="nextDate" aria-label="다음">→</button></div></section>
+    <section class="goal-strip" aria-labelledby="goalHeading"><div class="section-label"><span>01</span><div><p class="kicker">CORE GOALS</p><h2 id="goalHeading">나침반 목표</h2></div></div><div class="goal-list" id="goalList"></div><form class="goal-form" id="goalForm"><input id="goalInput" maxlength="60" placeholder="새 핵심 목표" aria-label="새 핵심 목표" required><button>추가</button></form></section>
+    <section class="day-view" id="dayView">
+      <div class="plan-panel priority-panel"><div class="panel-head"><div class="section-label"><span>02</span><div><p class="kicker">PRIORITY</p><h2>오늘의 우선순위</h2></div></div><button class="add-button" data-open="taskDialog">+ 할 일</button></div><div class="priority-guide"><b>A</b> 반드시 · <b>B</b> 중요 · <b>C</b> 하면 좋음</div><div class="task-list" id="taskList"></div><div class="empty" id="taskEmpty" hidden>오늘의 중요한 결과를 한 가지 적어보세요.</div></div>
+      <div class="plan-panel timeline-panel"><div class="panel-head"><div class="section-label"><span>03</span><div><p class="kicker">TIME BLOCKS</p><h2>시간 약속</h2></div></div><button class="add-button" data-open="blockDialog">+ 시간 블록</button></div><div class="timeline" id="timeline"></div></div>
+      <aside class="reflection-card"><div class="section-label"><span>04</span><div><p class="kicker">DAILY REVIEW</p><h2>기록과 성찰</h2></div></div><label>오늘 가장 중요한 한 문장<textarea id="dailyFocus" maxlength="240" placeholder="오늘 무엇에 집중할지 적어보세요."></textarea></label><label>감사하거나 배운 점<textarea id="dailyReview" maxlength="400" placeholder="하루를 마치며 짧게 남겨보세요."></textarea></label><p class="save-state" id="saveState">자동 저장됩니다.</p></aside>
+    </section>
+    <section class="week-view" id="weekView" hidden><div class="week-board" id="weekBoard"></div><aside class="week-review"><p class="kicker">WEEKLY REVIEW</p><h2>이번 주 방향</h2><label>이번 주에 이루고 싶은 결과<textarea id="weeklyOutcome" maxlength="400" placeholder="완료했을 때 분명히 알 수 있는 결과를 적어보세요."></textarea></label><label>멈추거나 덜어낼 일<textarea id="weeklyAvoid" maxlength="300" placeholder="중요한 일에 시간을 내기 위해 무엇을 덜어낼까요?"></textarea></label><p class="save-state">자동 저장됩니다.</p></aside></section>
+  </main>
+</div>
+<dialog id="taskDialog"><form method="dialog" id="taskForm" class="dialog-form"><div class="dialog-head"><div><p class="kicker">NEW PRIORITY</p><h2>할 일 계획</h2></div><button value="cancel" formnovalidate aria-label="닫기">×</button></div><label>할 일<input id="taskTitle" maxlength="80" required placeholder="완료할 결과를 동사로 적어보세요."></label><div class="field-row"><label>날짜<input id="taskDate" type="date" required></label><label>우선순위<select id="taskPriority"><option value="A">A · 반드시</option><option value="B">B · 중요</option><option value="C">C · 하면 좋음</option></select></label></div><div class="field-row"><label>핵심 목표<select id="taskGoal"></select></label><label>예상 시간(분)<input id="taskDuration" type="number" min="5" max="720" step="5" value="30" required></label></div><div class="dialog-actions"><button value="cancel" class="secondary" formnovalidate>취소</button><button value="default" class="primary">계획에 추가</button></div></form></dialog>
+<dialog id="blockDialog"><form method="dialog" id="blockForm" class="dialog-form"><div class="dialog-head"><div><p class="kicker">NEW TIME BLOCK</p><h2>시간 약속</h2></div><button value="cancel" formnovalidate aria-label="닫기">×</button></div><label>시간 블록 이름<input id="blockTitle" maxlength="60" required placeholder="예: 기획안 깊이 작업"></label><label>날짜<input id="blockDate" type="date" required></label><div class="field-row"><label>시작<input id="blockStart" type="time" value="09:00" required></label><label>종료<input id="blockEnd" type="time" value="10:00" required></label></div><label>성격<select id="blockTone"><option value="focus">집중</option><option value="health">건강</option><option value="balance">생활</option></select></label><div class="dialog-actions"><button value="cancel" class="secondary" formnovalidate>취소</button><button value="default" class="primary">시간 확보</button></div></form></dialog>
+<script src="planner-data.js"></script><script src="planner.js"></script>
+</body></html>
